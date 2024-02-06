@@ -1,40 +1,34 @@
+var APIKey = "901d3c1a1ede4f6989d7c4e493c7efb9";
 document.getElementById('search-button').addEventListener('click', function () {
-    var cityInput = document.getElementById('city-input').value;
-    searchCity(cityInput);
+    var cityInput = document.getElementById('city-input').value.trim();
+    if (cityInput) {
+        searchCity(cityInput);
+        addToSearchHistory(cityInput);
+    }
 });
 
 function searchCity(city) {
-    // Utiliza una API de geolocalización para obtener latitud y longitud de la ciudad
-    var geocodingUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=1&appid=901d3c1a1ede4f6989d7c4e493c7efb9`;
+
+    var geocodingUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${APIKey}&units=metric`;
 
     fetch(geocodingUrl)
         .then(response => response.json())
         .then(data => {
-            if (data.length > 0) {
-                var lat = data[0].lat;
-                var lon = data[0].lon;
-                getCurrentWeather(lat, lon, city);
-                getForecastWeather(lat, lon);
-                // Agrega la ciudad al historial de búsqueda
-                addToSearchHistory(city);
+            if (data.cod === 200) {
+                displayCurrentWeather(data, city);
+                getForecastWeather(city);
             } else {
-                console.log("Ciudad no encontrada");
+                alert("Ciudad no encontrada");
             }
+        })
+        .catch(error => {
+            console.error("Error al realizar la solicitud a la API:", error);
         });
 }
 
-function getCurrentWeather(lat, lon, city) {
-    var currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=tu_clave_de_api&units=metric`;
+function getForecastWeather(city) {
 
-    fetch(currentWeatherUrl)
-        .then(response => response.json())
-        .then(data => {
-            displayCurrentWeather(data, city);
-        });
-}
-
-function getForecastWeather(lat, lon) {
-    var forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=tu_clave_de_api&units=metric`;
+    var forecastWeatherUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${APIKey}&units=metric`;
 
     fetch(forecastWeatherUrl)
         .then(response => response.json())
@@ -44,22 +38,55 @@ function getForecastWeather(lat, lon) {
 }
 
 function displayCurrentWeather(data, city) {
-    // Aquí se debería actualizar el DOM con los datos del tiempo actual para la ciudad
-    console.log(data);
-    // Ejemplo de cómo mostrar los datos: document.getElementById('current-weather').textContent = `Temperatura en ${city}: ${data.main.temp}°C`;
+    let currentWeatherContainer = document.getElementById('current-weather');
+    currentWeatherContainer.innerHTML = `
+        <h2>Current Weather in ${city}</h2>
+        <img src="${iconUrl}" alt="Weather icon">
+        <p>Temperature: ${data.main.temp}°C</p>
+        <p>Humidity: ${data.main.humidity}%</p>
+        <p>Wind Speed: ${data.wind.speed} km/h</p>
+        <p>Description: ${data.weather[0].description}</p>
+    `;
 }
 
 function displayForecastWeather(data) {
-    // Aquí se debería actualizar el DOM con los datos del pronóstico del tiempo
-    console.log(data);
+    let forecastContainer = document.getElementById('forecast-weather');
+    forecastContainer.innerHTML = '<h2>5-Day Forecast: </h2>';
+    const forecastItems = data.list.filter((item, index) => index % 8 === 0);
+    forecastItems.forEach(forecast => {
+        let iconUrl = `https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png`;
+        forecastContainer.innerHTML += `
+            <div class="forecast-item">
+                <h3>${new Date(forecast.dt * 1000).toLocaleDateString()}</h3>
+                <img src="${iconUrl}" alt="Weather icon">
+                <p>Temp: ${forecast.main.temp}°C</p>
+                <p>Humidity: ${forecast.main.humidity}%</p>
+            </div>
+        `;
+    });
 }
 
 function addToSearchHistory(city) {
-    // Aquí se debería agregar la ciudad al historial de búsqueda y actualizar el DOM correspondientemente
+    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    if (!searchHistory.includes(city)) {
+        searchHistory.push(city);
+        localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+    }
+    displaySearchHistory();
 }
 
-// Evento para gestionar clics en el historial de búsqueda
-document.getElementById('search-history').addEventListener('click', function (event) {
-    var city = event.target.textContent;
-    searchCity(city);
-});
+function displaySearchHistory() {
+    let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+    let historyElement = document.getElementById('search-history');
+    historyElement.innerHTML = '<h2>Search History</h2>';
+    searchHistory.forEach(city => {
+        let cityElement = document.createElement('button');
+        cityElement.textContent = city;
+        cityElement.classList.add('history-btn');
+        cityElement.addEventListener('click', () => searchCity(city));
+        historyElement.appendChild(cityElement);
+    });
+}
+
+
+displaySearchHistory

@@ -30,6 +30,12 @@ body {
     background-color: #0056b3;
 }
 
+.weather-dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
 #current-weather,
 #forecast-weather,
 #search-history {
@@ -38,6 +44,33 @@ body {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     margin-top: 20px;
+}
+
+#current-weather {
+    flex: 10;
+    /* Ocupa más espacio */
+}
+
+#forecast-weather,
+#search-history {
+    flex: 1;
+    /* Ocupan menos, igual espacio entre ellos */
+    width: calc(50% - 10px);
+    /* Ajusta el ancho para que quepan en la misma línea, ajustando el margen como sea necesario */
+    margin-top: 20px;
+}
+
+/* Ajuste opcional para responsividad */
+@media (max-width: 768px) {
+    .weather-dashboard {
+        flex-direction: column;
+    }
+
+    #forecast-weather,
+    #search-history {
+        width: 100%;
+        /* Ocupan todo el ancho en pantallas pequeñas */
+    }
 }
 
 h2 {
