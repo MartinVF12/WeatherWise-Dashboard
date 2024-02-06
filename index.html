@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WEATHER DASHBOARD</title>
+    <link rel="stylesheet" href="ASSETS/style.css">
+    <header class="p-5 text-center text-white bg-primary">
+        <h1> WEATHER DASHBOARD</h1>
+    </header>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        #search-section {
+            margin-bottom: 20px;
+        }
+
+        #city-input {
+            padding: 10px;
+            margin-right: 10px;
+            width: 200px;
+        }
+
+        #search-button {
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        #current-weather,
+        #forecast-weather,
+        #search-history {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        .weather-item {
+            margin: 10px 0;
+        }
+
+        .forecast-item {
+            display: inline-block;
+            width: 18%;
+            padding: 10px;
+            margin-right: 2%;
+            background-color: #efefef;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .forecast-item:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="search-section">
+        <header class="serch">
+            <h1>Search for a City </h1>
+            <input type="text" id="city-input" placeholder="MEXICO CITY">
+            <button id="search-button">Search</button>
+        </header>
+    </div>
+
+    <div id="current-weather">
+        <h2>Actual Weather </h2>
+        <!-- Los detalles del clima actual se mostrarán aquí -->
+    </div>
+
+    <div id="forecast-weather">
+        <h2>5-Day Forecast: </h2>
+        <!-- Los detalles del pronóstico se mostrarán aquí -->
+    </div>
+
+    <div id="search-history">
+        <h2>Search History</h2>
+        <!-- Las ciudades buscadas se mostrarán aquí -->
+    </div>
+
+
+
+</body>
+
+</html>
