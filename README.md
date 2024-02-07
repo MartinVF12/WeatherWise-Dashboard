@@ -15,7 +15,9 @@ Search History: Saves the user's search queries and allows easy access to previo
 
 REPO: https://github.com/MartinVF12/WeatherWise-Dashboard 
 
-DEPLOY: 
+DEPLOY: https://martinvf12.github.io/WeatherWise-Dashboard/ 
 
+<img width="1439" alt="Captura de pantalla 2024-02-06 a la(s) 6 41 17 p m" src="https://github.com/MartinVF12/WeatherWise-Dashboard/assets/152545821/f22451c4-e4f9-46d2-8eab-0a9dcef53d89">
+ 
 
 
