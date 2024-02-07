@@ -18,8 +18,25 @@
             background-color: #f4f4f4;
         }
 
-        #search-section {
-            margin-bottom: 20px;
+        .main-container {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        #search-section,
+        #forecast-weather,
+        #search-history {
+            flex: 1;
+        }
+
+        #current-weather {
+            width: 90%;
+            margin-left: auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         #city-input {
@@ -33,21 +50,12 @@
             cursor: pointer;
         }
 
-        #current-weather,
-        #forecast-weather,
-        #search-history {
-            margin-top: 20px;
-            padding: 20px;
-            background-color: white;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
         h2 {
             color: #333;
         }
 
-        .weather-item {
+        .weather-item,
+        .forecast-item {
             margin: 10px 0;
         }
 
@@ -69,30 +77,40 @@
 
 <body>
 
-    <div id="search-section">
-        <header class="search">
-            <h1>Search for a City:</h1>
-            <input type="text" id="city-input" placeholder="CITY">
-            <button id="search-button">Search</button>
-        </header>
+
+    <div class="main-container">
+
+        <div class="left-column">
+            <div id="search-section">
+                <header class="search">
+                    <h1>Search for a City:</h1>
+                    <input type="text" id="city-input" placeholder="CITY">
+                    <button id="search-button">Search</button>
+                </header>
+            </div>
+
+            <div id="search-history">
+                <h2>Search History</h2>
+
+            </div>
+        </div>
+
+
+        <div class="right-column">
+            <div id="current-weather">
+                <h2>Current Weather</h2>
+
+            </div>
+
+            <div id="forecast-weather">
+                <h2>5-Day Forecast:</h2>
+                <div id="forecast-container">
+
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="current-weather">
-        <h2>Current Weather</h2>
-
-        <div id="weather-icon"></div>
-    </div>
-
-    <div id="forecast-weather">
-        <h2>5-Day Forecast:</h2>
-
-        <div id="forecast-container"></div>
-    </div>
-
-    <div id="search-history">
-        <h2>Search History</h2>
-
-    </div>
     <script src="./ASSETS/script.js"></script>
 </body>
 
